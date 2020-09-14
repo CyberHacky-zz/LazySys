@@ -9,6 +9,7 @@ import re
 
 
 
+
 #Title print
 
 logo = ('''
@@ -70,8 +71,7 @@ def startinstallrsys():
     installrsys = input("Do You want to Install Rsyslog? [Y/N] = ")
 
     if installrsys == "Y":
-        print("Installing Rsyslog...\n")
-        os.system('sudo apt install rsyslog -y')
+        installrsyslog()
     else:
         print("RSyslog Configuration process is Stoped")
         mainmenu()
@@ -117,13 +117,91 @@ def conrsyslog():
         mainmenu()
     
 
-def rsysreceiver():
-    print("Under Devlopment")
 
 def rsyssender():
     print("Under Devlopment")
 
+def rsysreceiver():
 
+    print('\033[1m [+] Rsyslog Server Configuration Process Started \033[0m')
+    print('\033[1m [+] Started Rsyslog Service  \033[0m')
+    os.system('sudo systemctl start rsyslog')
+    os.system('sudo systemctl enable rsyslog')
+    
+    print('\033[1m [+] Configuring UFW Firewall Rules   \033[0m')
+    os.system('sudo ufw allow 514/udp')
+    os.system('sudo ufw allow 50514/tcp')
+
+# Server Setup Code is here - it's unstable
+
+def rudpone():
+	reading_file = open("rsyslog.conf", "r")
+	new_file_content = ""
+
+	for line in reading_file:
+		stripped_line = line.strip()
+		new_line = stripped_line.replace('#module(load="imudp")', 'module(load="imudp")')
+		new_file_content += new_line +"\n"
+	
+	reading_file.close()
+	writing_file = open("rsyslog.conf", "w")
+	writing_file.write(new_file_content)
+	writing_file.close()
+
+
+def rudptwo():
+	reading_file = open("rsyslog.conf", "r")
+	new_file_content = ""
+
+	for line in reading_file:
+		stripped_line = line.strip()
+		new_line = stripped_line.replace('#input(type="imudp" port="514")', 'input(type="imudp" port="514")')
+		new_file_content += new_line +"\n"
+	
+	reading_file.close()
+	writing_file = open("rsyslog.conf", "w")
+	writing_file.write(new_file_content)
+	writing_file.close()
+
+def rtcpone():
+	reading_file = open("rsyslog.conf", "r")
+	new_file_content = ""
+
+	for line in reading_file:
+		stripped_line = line.strip()
+		new_line = stripped_line.replace('#module(load="imtcp")', 'module(load="imtcp")')
+		new_file_content += new_line +"\n"
+	
+	reading_file.close()
+	writing_file = open("rsyslog.conf", "w")
+	writing_file.write(new_file_content)
+	writing_file.close()
+
+
+def rtcptwo():
+	reading_file = open("rsyslog.conf", "r")
+	new_file_content = ""
+
+	for line in reading_file:
+		stripped_line = line.strip()
+		new_line = stripped_line.replace('#input(type="imtcp" port="514")', 'input(type="imtcp" port="514")')
+		new_file_content += new_line +"\n"
+	
+	reading_file.close()
+	writing_file = open("rsyslog.conf", "w")
+	writing_file.write(new_file_content)
+	writing_file.close()
+
+
+rudpone()
+rudptwo()
+rtcpone()
+rtcptwo()
+
+# Be aware - Don't Touch unneccesory
+    
+
+    
 
 
 

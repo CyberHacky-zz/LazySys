@@ -1,2 +1,5 @@
 /.vscode
 test.py
+server.py
+client.py
+/test

@@ -5,21 +5,22 @@
 import os
 import subprocess
 import sys
-
+import re
 
 
 
 #Title print
 
 logo = ('''
-       ██████╗███████╗ █████╗ ███████╗██╗██████╗ ███╗  ███╗
-     ██╔════╝██╔════╝██╔══██╗██╔════╝██║██╔══██╗████╗ ████║
-     ╚█████╗ █████   ██║  ╚═╝█████╗  ██║██████╔╝██╔████╔██║
-      ╚═══██╗██╔══╝  ██║  ██╗██╔══╝  ██║██╔══██╗██║╚██╔╝██║
-     ██████╔╝███████╗╚█████╔╝██║     ██║██║  ██║██║ ╚═╝ ██║
-     ╚═════╝ ╚══════╝ ╚════╝ ╚═╝     ╚═╝╚═╝  ╚═╝╚═╝     ╚═╝
-~~~~~~~~~~~~~~~~~~~~~~~
-[!] This Tool Must Run As ROOT [!]         Created By : SecFirm Team\n\n''')
+
+    ██╗      █████╗ ███████╗██╗   ██╗ ██████╗██╗   ██╗ ██████╗
+    ██║     ██╔══██╗╚════██║╚██╗ ██╔╝██╔════╝╚██╗ ██╔╝██╔════╝  
+    ██║     ███████║  ███╔═╝ ╚████╔╝ ╚█████╗  ╚████╔╝ ╚█████╗
+    ██║     ██╔══██║██╔══╝    ╚██╔╝   ╚═══██╗  ╚██╔╝   ╚═══██╗
+    ███████╗██║  ██║███████╗   ██║   ██████╔╝   ██║   ██████╔╝
+    ╚══════╝╚═╝  ╚═╝╚══════╝   ╚═╝   ╚═════╝    ╚═╝   ╚═════╝
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+[!] This Tool Must Run As ROOT [!] - Created By : SecFirm Team\n\n''')
 
 
 # Print Logo on startup
@@ -59,8 +60,20 @@ def rversion():
     if rc == 0:
         print ('Rsyslog installed!\n')
         os.system('rsyslogd -v')
+        mainmenu()
     else:
         print ('Rsyslog missing in path!')
+        startinstallrsys()
+
+def startinstallrsys():
+
+    installrsys = input("Do You want to Install Rsyslog? [Y/N] = ")
+
+    if installrsys == "Y":
+        print("Installing Rsyslog...\n")
+        os.system('sudo apt install rsyslog -y')
+    else:
+        print("RSyslog Configuration process is Stoped")
         mainmenu()
 
 def installrsyslog():
@@ -82,10 +95,33 @@ def installrsyslog():
 
 
 def conrsyslog():
-    print('under Devlopment')
+    
+    print ("""
+   {1}--Configure Remote Server - (Log Receiver)
+   {2}--Configure Remote Client - (Log Sender)
+   {0}--Exit
+ """)
+    choice = input("LazySys~# ")
+    if choice == "1":
+        rsysreceiver()
+    elif choice == "2":
+        rsyssender()
+    elif choice == "0":
+        print("Thanks for Using SecFirm")
+        os.system('clear'), sys.exit()
+    elif choice == "":
+        print("\033[1m [+] Kindly Choose One Option \033[0m")
+        conrsyslog()
+    else:
+        print(logo)
+        mainmenu()
+    
 
-    mainmenu()
+def rsysreceiver():
+    print("Under Devlopment")
 
+def rsyssender():
+    print("Under Devlopment")
 
 
 

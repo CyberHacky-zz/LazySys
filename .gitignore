@@ -2,4 +2,6 @@
 test.py
 server.py
 client.py
+db.sqlite3
 /test
+settings.py

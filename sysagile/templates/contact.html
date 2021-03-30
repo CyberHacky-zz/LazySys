@@ -1,21 +1,82 @@
 {%extends 'header.html' %}
 {% block content%}
-
+<!DOCTYPE html>
 <html>
 
 <head>
-    <title>LogAgile - Contact</title>
-
-    <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        input[type=text],
+        select,
+        textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+            margin-top: 6px;
+            margin-bottom: 16px;
+            resize: vertical;
+        }
+
+        input[type=submit] {
+            background-color: #4CAF50;
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        input[type=submit]:hover {
+            background-color: #45a049;
+        }
+
+        .container {
+            border-radius: 5px;
+            background-color: #f2f2f2;
+            padding: 20px;
+        }
+
+        h3 {
+            text-align: center;
+        }
+    </style>
 </head>
 
 <body>
-    <h1> Contact</h1>
 
+
+    <div class="container">
+
+
+        <h3 class="alert alert-info"> Contact Us</h3>
+
+        {% if msg %}
+        <h3 class="alert alert-success">{{msg}}</h3>
+        {% endif %}
+        <form name="contact" method="POST" action="{% url 'contact' %}">
+            {% csrf_token %}
+            <label for="fname">Name</label>
+            <input type="text" id="name" name="name" placeholder="Your name..">
+
+            <label for="lname">Email</label>
+            <input type="text" id="email" name="email" placeholder="Your last name..">
+
+            <label for="subject">Message</label>
+            <textarea id="subject" name="message" placeholder="Write something.." style="height:200px"></textarea>
+
+            <input type="submit" value="Submit">
+        </form>
+    </div>
 
 </body>
 

@@ -4,7 +4,7 @@
 <html>
 
 <head>
-    <title>LogAgile - Login</title>
+    <title>LogAgile - Signup</title>
 
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -70,7 +70,7 @@
         .cancelbtn,
         .signupbtn {
             float: left;
-            width: 50%;
+            width: 100%;
         }
 
         /* Add padding to container elements */
@@ -98,25 +98,31 @@
 
 <body>
 
-    <form name="singup" method="POST" action="{% url 'login' %}" style="border:1px solid #ccc">
+    <form name="singup" method="POST" action="{% url 'signup' %}" style="border:1px solid #ccc">
         {% csrf_token %}
         <div class="container">
-            <h1>Login</h1>
+            <h1>Sign Up</h1>
+            <p>Please fill in this form to create an account.</p>
 
             {% if msg %}
             <h3 class="alert alert-success">{{msg}}</h3>
             {% endif %}
             <hr>
-            <!--
+
             <label for="username"><b>Username</b></label>
             <input type="text" placeholder="Enter Username" name="username" required>
-            -->
+
+            <label for="name"><b>Name</b></label>
+            <input type="text" placeholder="Enter Full Name" name="name" required>
 
             <label for="email"><b>Email</b></label>
             <input type="text" placeholder="Enter Email" name="email" required>
 
             <label for="psw"><b>Password</b></label>
             <input type="password" placeholder="Enter Password" name="password" required>
+
+            <label for="psw-repeat"><b>Repeat Password</b></label>
+            <input type="password" placeholder="Confirm Password" name="confirmpassword" required>
 
             <!--
             <label>
@@ -127,8 +133,8 @@
                 </p>-->
 
             <div class="clearfix">
-                <button type="button" name="action" value="Forgot password" class="cancelbtn">Forgot Password</button>
-                <button type="submit" name="action" value="Login" class="signupbtn">Login</button>
+
+                <button type="submit" class="signupbtn">Sign Up</button>
             </div>
         </div>
     </form>

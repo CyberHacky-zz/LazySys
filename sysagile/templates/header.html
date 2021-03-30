@@ -15,18 +15,31 @@
     <nav class="navbar navbar-inverse">
         <div class="container-fluid">
             <div class="navbar-header">
-                <a class="navbar-brand" href="#">SYSAgile</a>
+                <a class="navbar-brand" href="/">SYSAgile</a>
             </div>
             <ul class="nav navbar-nav">
-                <li><a href="#">Home</a></li>
+                <li><a href="/">Home</a></li>
                 <li><a href="#">Logs</a></li>
 
                 <li><a href="{% url 'contact' %}">Contact</a></li>
             </ul>
+
+            {% if request.session.email %}
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="#"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
-                <li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+
+                <li><a href="{% url 'change_password' %}"><span class="glyphicon glyphicon-log-in"></span> Change
+                        Password</a>
+                </li>
+                <li><a href="{% url 'logout' %}"><span class="glyphicon glyphicon-log-in"></span> Logout</a></li>
             </ul>
+            {% else %}
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="{% url 'signup' %}"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
+                <li><a href="{% url 'login'%}"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+            </ul>
+            {% endif %}
+
+
         </div>
     </nav>
 

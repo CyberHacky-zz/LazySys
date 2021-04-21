@@ -4,16 +4,27 @@ from . models import Contact, User
 
 
 def index(request):
-    return render(request, 'index.html')
+
+    try:
+
+        if request.session['email']:
+
+            return render(request, 'index.html')
+    except Exception as e:
+        print(e)
+        print("Except Called")
+        return render(request, 'login.html')
 
 
 def contact(request):
+
     if request.method == "POST":
         Contact.objects.create(
             name=request.POST['name'],
             email=request.POST['email'],
             message=request.POST['message']
         )
+
         msg = "Message saved succesfully"
         return render(request, 'contact.html', {'msg': msg})
     else:
@@ -63,9 +74,10 @@ def login(request):
             if user:
                 request.session['name'] = user.name
                 request.session['email'] = user.email
-                return render(request, 'index.html')
+                return render(request, 'index.html', {'user': user})
 
-        except:
+        except Exception as e:
+            print(e)
             msg = "Password Doesn't matched"
             return render(request, 'login.html', {'msg': msg})
     else:
@@ -92,9 +104,57 @@ def change_password(request):
                 return redirect('logout')
             else:
                 msg = "New Password & Confirm New Password Doesn't Matched"
-                return render(request, 'change_password.html', {'msg': msg})
+                return render(request, 'profile.html', {'msg': msg})
         else:
             msg = "Old Password is Incorrect"
-            return render(request, 'change_password.html', {'msg': msg})
+            return render(request, 'profile.html', {'msg': msg})
     else:
-        return render(request, 'change_password.html')
+        return render(request, 'profile.html')
+
+
+def update_profile(request):
+    user = User.objects.get(email=request.session['email'])
+    user.username = request.POST['username']
+    user.name = request.POST['name']
+    try:
+        User.objects.get(email=request.POST['email'])
+        msg = "Email is already used"
+        return render(request, 'profile.html', {'msg': msg, 'user': user})
+    except:
+        user.email = request.POST['email']
+    user.save()
+    msg = "Data Updated Succesfully"
+    return render(request, 'profile.html', {'msg': msg, 'user': user})
+
+
+def profile(request):
+    user = User.objects.get(email=request.session['email'])
+
+    return render(request, 'profile.html', {'user': user})
+
+
+def forgot_password(request):
+
+    return render(request, 'forgot_password.html')
+
+
+# Client - Server configuration
+
+def client(request):
+    user = User.objects.get(email=request.session['email'])
+    return render(request, 'client.html', {'user': user})
+
+
+def server(request):
+    user = User.objects.get(email=request.session['email'])
+    return render(request, 'server.html', {'user': user})
+
+
+def terminal(request):
+    user = User.objects.get(email=request.session['email'])
+    return render(request, 'terminal.html', {'user': user})
+
+
+def dashboard(request):
+    user = User.objects.get(email=request.session['email'])
+    return render(request, 'dashboard.html', {'user': user})

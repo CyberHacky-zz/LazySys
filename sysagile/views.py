@@ -8,7 +8,7 @@ def index(request):
     try:
 
         if request.session['email']:
-
+            print("sesion working")
             return render(request, 'index.html')
     except Exception as e:
         print(e)
@@ -73,8 +73,9 @@ def login(request):
             )
             if user:
                 request.session['name'] = user.name
+                request.session['username'] = user.username
                 request.session['email'] = user.email
-                return render(request, 'index.html', {'user': user})
+                return render(request, 'index.html')
 
         except Exception as e:
             print(e)
